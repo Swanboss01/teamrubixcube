@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeamRubixCube - Connexion</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Ajoute un fichier CSS externe pour le design -->
+    <title>TeamRubixCube - Accueil</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Ajoute un fichier CSS pour le design -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/auth0-js/9.19.0/auth0.min.js"></script>
     <style>
         body {
@@ -13,7 +13,7 @@
             background-color: #f4f4f4;
             padding: 50px;
         }
-        #login, #logout {
+        #login, #logout, #account {
             background-color: #007bff;
             color: white;
             border: none;
@@ -21,6 +21,7 @@
             font-size: 18px;
             cursor: pointer;
             margin: 10px;
+            border-radius: 5px;
         }
         #logout {
             background-color: #dc3545;
@@ -44,34 +45,13 @@
     <header>
         <h1>🌟 Bienvenue chez TeamRubixCube 🌟</h1>
         <p>"La rapidité, la stratégie, l'excellence !"</p>
+        <button id="account" onclick="window.location.href='https://teamrubixcube.netlify.app/account.html';">Mon compte</button>
     </header>
 
     <section id="projet">
         <h2>🔗 Notre projet</h2>
         <p><a href="https://github.com/Swanboss01/teamrubixcube" target="_blank">Code source sur GitHub</a></p>
         <p><a href="https://teamrubixcube.netlify.app" target="_blank">Site officiel sur Netlify</a></p>
-    </section>
-
-    <section id="equipe">
-        <h2>🔥 Notre Équipe</h2>
-        <div class="membre">
-            <h3>[Nom du Membre]</h3>
-            <p>🎯 Spécialité : [Type de Cube ou Technique]</p>
-            <p>⏱️ Record personnel : [Temps record]</p>
-            <p>💡 Bio : [Explication sur son parcours]</p>
-        </div>
-        <div class="membre">
-            <h3>[Nom du Membre]</h3>
-            <p>🎯 Spécialité : [Type de Cube ou Technique]</p>
-            <p>⏱️ Record personnel : [Temps record]</p>
-            <p>💡 Bio : [Explication sur son parcours]</p>
-        </div>
-    </section>
-
-    <section id="recrutement">
-        <h2>📂 Rejoindre TeamRubixCube</h2>
-        <p><a href="fichier_inscription.pdf" download>📄 Inscription permanente - Si tu sais résoudre un Rubik's Cube</a></p>
-        <p><a href="fichier_temporaire.pdf" download>📄 Inscription temporaire (1 mois) - Si tu sais faire une seule face</a></p>
     </section>
 
     <section id="auth">
@@ -81,7 +61,7 @@
 
         <div id="profile">
             <h2>Bienvenue, <span id="username"></span>!</h2>
-            <p>Email: <span id="email"></span></p>
+            <p>Email : <span id="email"></span></p>
             <img id="avatar" src="" alt="Avatar">
         </div>
     </section>
@@ -105,7 +85,7 @@
 
         function handleAuthentication() {
             auth0.parseHash(function (err, authResult) {
-                if (authResult && authResult.accessToken && authResult.idToken) {
+                if (authResult && authResult.accessToken) {
                     auth0.client.userInfo(authResult.accessToken, function (err, user) {
                         document.getElementById("profile").style.display = "block";
                         document.getElementById("username").textContent = user.name;
@@ -114,7 +94,7 @@
                         document.getElementById("login").style.display = "none";
                         document.getElementById("logout").style.display = "inline-block";
                     });
-                } else if (err) {
+                } else {
                     console.error("Erreur d'authentification:", err);
                 }
             });
