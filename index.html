@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeamRubixCube</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Ajoute un fichier CSS pour le design -->
+    <title>TeamRubixCube - Connexion</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Ajoute un fichier CSS externe pour le design -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/auth0-js/9.19.0/auth0.min.js"></script>
     <style>
         body {
@@ -90,7 +90,7 @@
         var auth0 = new auth0.WebAuth({
             domain: "dev-580fkbolt24woc4k.us.auth0.com",
             clientID: "sSownSBEaGwqVc3ekPlugNxnS21NfsW1",
-            redirectUri: window.location.origin,
+            redirectUri: "https://teamrubixcube.netlify.app",
             responseType: "token id_token",
             scope: "openid profile email"
         });
@@ -100,7 +100,7 @@
         });
 
         document.getElementById("logout").addEventListener("click", function () {
-            auth0.logout({ returnTo: window.location.origin });
+            auth0.logout({ returnTo: "https://teamrubixcube.netlify.app" });
         });
 
         function handleAuthentication() {
