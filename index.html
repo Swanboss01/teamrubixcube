@@ -125,7 +125,8 @@
         });
 
         document.getElementById("logout").addEventListener("click", function () {
-            auth0.logout({ returnTo: "https://teamrubixcube.netlify.app" });
+            auth0.logout();
+            window.location.href = "https://teamrubixcube.netlify.app";  // ✅ Retourner sur l'accueil sans passer par la connexion Auth0
         });
 
         window.onload = checkLogin;
