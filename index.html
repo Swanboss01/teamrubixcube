@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeamRubixCube - Accueil</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Fichier CSS externe -->
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/auth0-js/9.19.0/auth0.min.js"></script>
     <style>
         body {
@@ -25,6 +25,7 @@
         }
         #logout {
             background-color: #dc3545;
+            display: none;
         }
         table {
             border-collapse: collapse;
@@ -89,7 +90,7 @@
     <section id="auth">
         <h2>🔐 Connexion Auth0</h2>
         <button id="login">Connexion</button>
-        <button id="logout" style="display:none;">Déconnexion</button>
+        <button id="logout">Déconnexion</button>
     </section>
 
     <script>
@@ -101,6 +102,25 @@
             scope: "openid profile email"
         });
 
+        function checkLogin() {
+            auth0.parseHash(function (err, authResult) {
+                if (!authResult || !authResult.accessToken) {
+                    auth0.authorize();
+                } else {
+                    showUserProfile(authResult);
+                }
+            });
+        }
+
+        function showUserProfile(authResult) {
+            auth0.client.userInfo(authResult.accessToken, function (err, user) {
+                if (user) {
+                    document.getElementById("logout").style.display = "inline-block";
+                    document.getElementById("login").style.display = "none";
+                }
+            });
+        }
+
         document.getElementById("login").addEventListener("click", function () {
             auth0.authorize();
         });
@@ -109,26 +129,7 @@
             auth0.logout({ returnTo: "https://teamrubixcube.netlify.app" });
         });
 
-        function handleAuthentication() {
-            auth0.parseHash(function (err, authResult) {
-                if (authResult && authResult.accessToken) {
-                    auth0.client.userInfo(authResult.accessToken, function (err, user) {
-                        document.getElementById("profile").style.display = "block";
-                        document.getElementById("username").textContent = user.name;
-                        document.getElementById("email").textContent = user.email;
-                        document.getElementById("avatar").src = user.picture;
-                        document.getElementById("login").style.display = "none";
-                        document.getElementById("logout").style.display = "inline-block";
-                    });
-                } else {
-                    console.error("Erreur d'authentification:", err);
-                }
-            });
-        }
-
-        window.onload = function () {
-            console.log("Page chargée, mais connexion automatique désactivée.");
-        };
+        window.onload = checkLogin;
     </script>
 
     <footer>
