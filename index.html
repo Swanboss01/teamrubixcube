@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,20 @@
             border-radius: 50%;
             margin-top: 10px;
         }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -58,6 +72,36 @@
         <h2>📂 Rejoindre TeamRubixCube</h2>
         <p><a href="fichier_inscription.pdf" download>📄 Inscription permanente - Si tu sais résoudre un Rubik's Cube</a></p>
         <p><a href="fichier_temporaire.pdf" download>📄 Inscription temporaire (1 mois) - Si tu sais faire une seule face</a></p>
+    </section>
+
+    <section id="scores">
+        <h2>🏆 Scores & Records</h2>
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Cube utilisé</th>
+                <th>Meilleur temps</th>
+                <th>Compétition</th>
+            </tr>
+            <tr>
+                <td>SwanBoss</td>
+                <td>Rubik's Cube 3x3</td>
+                <td>7.32s</td>
+                <td>Championnat France 2025</td>
+            </tr>
+            <tr>
+                <td>Vic</td>
+                <td>Rubik's Cube 4x4</td>
+                <td>15.20s</td>
+                <td>Tournoi Rubix Challenge</td>
+            </tr>
+            <tr>
+                <td>Anaïs</td>
+                <td>Rubik's Cube 2x2</td>
+                <td>2.85s</td>
+                <td>Open Speedcubing</td>
+            </tr>
+        </table>
     </section>
 
     <section id="auth">
