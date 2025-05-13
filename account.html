@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Compte - TeamRubixCube</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Ajoute un fichier CSS externe pour le design -->
+    <link rel="stylesheet" href="styles.css"> <!-- Fichier CSS externe -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/auth0-js/9.19.0/auth0.min.js"></script>
     <style>
         body {
@@ -21,7 +21,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        #logout, #back-home {
+        #logout, #back-home, #edit-profile {
             background-color: #007bff;
             color: white;
             border: none;
@@ -38,6 +38,20 @@
             border-radius: 50%;
             margin-top: 10px;
         }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -50,8 +64,34 @@
         <h2>Bienvenue, <span id="username"></span>!</h2>
         <p>Email : <span id="email"></span></p>
         <img id="avatar" src="" alt="Avatar">
+        <p><button id="edit-profile">Modifier mon profil</button></p>
         <p><button id="logout">Déconnexion</button></p>
         <p><button id="back-home" onclick="window.location.href='https://teamrubixcube.netlify.app';">Retour à l'accueil</button></p>
+    </section>
+
+    <section id="scores">
+        <h2>🏆 Mes Scores & Records</h2>
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Cube utilisé</th>
+                <th>Meilleur temps</th>
+                <th>Compétition</th>
+            </tr>
+            <tr>
+                <td>Vic</td>
+                <td>Rubik's Cube 4x4</td>
+                <td>15.20s</td>
+                <td>Tournoi Rubix Challenge</td>
+            </tr>
+        </table>
+        <p><button id="add-score">Ajouter un score</button></p>
+    </section>
+
+    <section id="roles">
+        <h2>⚡ Gestion des rôles</h2>
+        <p>Rôle actuel : <span id="user-role">Membre</span></p>
+        <p><button id="change-role">Changer de rôle</button></p>
     </section>
 
     <script>
@@ -63,14 +103,18 @@
             scope: "openid profile email"
         });
 
+        function showUserProfile(user) {
+            document.getElementById("profile").style.display = "block";
+            document.getElementById("username").textContent = user.name;
+            document.getElementById("email").textContent = user.email;
+            document.getElementById("avatar").src = user.picture;
+        }
+
         function handleAuthentication() {
             auth0.parseHash(function (err, authResult) {
                 if (authResult && authResult.accessToken) {
                     auth0.client.userInfo(authResult.accessToken, function (err, user) {
-                        document.getElementById("profile").style.display = "block";
-                        document.getElementById("username").textContent = user.name;
-                        document.getElementById("email").textContent = user.email;
-                        document.getElementById("avatar").src = user.picture;
+                        showUserProfile(user);
                     });
                 } else {
                     console.error("Erreur d'authentification:", err);
@@ -80,6 +124,18 @@
 
         document.getElementById("logout").addEventListener("click", function () {
             auth0.logout({ returnTo: "https://teamrubixcube.netlify.app" });
+        });
+
+        document.getElementById("edit-profile").addEventListener("click", function () {
+            alert("Modification du profil à venir !");
+        });
+
+        document.getElementById("add-score").addEventListener("click", function () {
+            alert("Ajout de score à venir !");
+        });
+
+        document.getElementById("change-role").addEventListener("click", function () {
+            alert("Gestion des rôles à venir !");
         });
 
         window.onload = handleAuthentication;
