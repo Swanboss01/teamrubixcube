@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte - TeamRubixCube</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Ajoute un fichier CSS externe pour le design -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/auth0-js/9.19.0/auth0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+        #profile {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #logout, #back-home {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        #logout {
+            background-color: #dc3545;
+        }
+        img {
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🔐 Mon Compte - TeamRubixCube</h1>
+    </header>
+
+    <section id="profile">
+        <h2>Bienvenue, <span id="username"></span>!</h2>
+        <p>Email : <span id="email"></span></p>
+        <img id="avatar" src="" alt="Avatar">
+        <p><button id="logout">Déconnexion</button></p>
+        <p><button id="back-home" onclick="window.location.href='https://teamrubixcube.netlify.app';">Retour à l'accueil</button></p>
+    </section>
+
+    <script>
+        var auth0 = new auth0.WebAuth({
+            domain: "dev-580fkbolt24woc4k.us.auth0.com",
+            clientID: "sSownSBEaGwqVc3ekPlugNxnS21NfsW1",
+            redirectUri: "https://teamrubixcube.netlify.app/account.html",
+            responseType: "token id_token",
+            scope: "openid profile email"
+        });
+
+        function handleAuthentication() {
+            auth0.parseHash(function (err, authResult) {
+                if (authResult && authResult.accessToken) {
+                    auth0.client.userInfo(authResult.accessToken, function (err, user) {
+                        document.getElementById("profile").style.display = "block";
+                        document.getElementById("username").textContent = user.name;
+                        document.getElementById("email").textContent = user.email;
+                        document.getElementById("avatar").src = user.picture;
+                    });
+                } else {
+                    console.error("Erreur d'authentification:", err);
+                }
+            });
+        }
+
+        document.getElementById("logout").addEventListener("click", function () {
+            auth0.logout({ returnTo: "https://teamrubixcube.netlify.app" });
+        });
+
+        window.onload = handleAuthentication;
+    </script>
+
+    <footer>
+        <p>© 2025 TeamRubixCube | Tous droits réservés</p>
+    </footer>
+
+</body>
+</html>
