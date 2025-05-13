@@ -103,10 +103,10 @@
 
         function checkLogin() {
             auth0.parseHash(function (err, authResult) {
-                if (!authResult || !authResult.accessToken) {
-                    auth0.authorize();
+                if (authResult && authResult.accessToken) {
+                    showUserProfile(authResult);  
                 } else {
-                    showUserProfile(authResult);
+                    console.log("Utilisateur non connecté."); // ✅ Affiche un message au lieu de forcer la connexion
                 }
             });
         }
